@@ -38,7 +38,7 @@ export default class LoginPage extends React.Component {
         .createUserWithEmailAndPassword(email, pass);
 
       console.log("Account created");
-
+      navigate('Todo');
       // Navigate to the Home page, the user is auto logged in
 
     } catch (error) {
@@ -71,7 +71,7 @@ export default class LoginPage extends React.Component {
           secureTextEntry={true}
         />
         <Button
-          onPress={() => navigate('Todo')}
+          onPress={() => this.signup(this.state.userName, this.state.pwd)}
           color={'#484848'}
           title="Open Map >"
         />
