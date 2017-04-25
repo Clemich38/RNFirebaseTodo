@@ -20,14 +20,16 @@ export default class LoginPage extends React.Component {
   }
 
   initFireBase(){
-    firebase.initializeApp({
-      apiKey: "AIzaSyBHOWbyrf6Mhfmz-oSpI6dDmU9v4AeJt_o",
-      authDomain: "rn-todo-app-ba94c.firebaseapp.com",
-      databaseURL: "https://rn-todo-app-ba94c.firebaseio.com",
-      projectId: "rn-todo-app-ba94c",
-      storageBucket: "rn-todo-app-ba94c.appspot.com",
-      messagingSenderId: "1043444153224"
-    });
+    if (firebase.apps.length === 0){
+      firebase.initializeApp({
+        apiKey: "AIzaSyBHOWbyrf6Mhfmz-oSpI6dDmU9v4AeJt_o",
+        authDomain: "rn-todo-app-ba94c.firebaseapp.com",
+        databaseURL: "https://rn-todo-app-ba94c.firebaseio.com",
+        projectId: "rn-todo-app-ba94c",
+        storageBucket: "rn-todo-app-ba94c.appspot.com",
+        messagingSenderId: "1043444153224"
+      });
+    }
   }
 
   async signup(email, pass) {
@@ -35,16 +37,32 @@ export default class LoginPage extends React.Component {
 
     try {
       await firebase.auth()
-        .createUserWithEmailAndPassword(email, pass);
-
-      console.log("Account created");
-      navigate('Todo');
-      // Navigate to the Home page, the user is auto logged in
+        .createUserWithEmailAndPassword(email, pass)
+        .then(() => {
+          console.log("Account created");
+          navigate('Todo');
+        });
+      
 
     } catch (error) {
       console.log(error.toString())
     }
+  }
 
+  async signin(email, pass) {
+    const { navigate } = this.props.navigation;
+
+    try {
+      await firebase.auth()
+        .signInWithEmailAndPassword(email, pass)
+        .then(() => {
+          console.log("Successfully logged in");
+          navigate('Todo');
+        });
+
+    } catch (error) {
+      console.log(error.toString())
+    }
   }
 
   static navigationOptions = {
@@ -62,6 +80,8 @@ export default class LoginPage extends React.Component {
           onChangeText={(userName) => this.setState({ userName })}
           value={this.state.userName}
           placeholder="email address"
+          autoCorrect={false}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
@@ -69,11 +89,18 @@ export default class LoginPage extends React.Component {
           value={this.state.pwd}
           placeholder="password"
           secureTextEntry={true}
+          autoCorrect={false}
+          autoCapitalize='none'
+        />
+        <Button
+          onPress={() => this.signin(this.state.userName, this.state.pwd)}
+          color={'#484848'}
+          title="Login >"
         />
         <Button
           onPress={() => this.signup(this.state.userName, this.state.pwd)}
           color={'#484848'}
-          title="Open Map >"
+          title="Sign Up >"
         />
       </View>
     );

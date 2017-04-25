@@ -6,6 +6,8 @@ import {
   ScrollView,
   StyleSheet
 } from 'react-native';
+import * as firebase from "firebase";
+import { NavigationActions } from 'react-navigation'
 
 export default class TodoPage extends React.Component {
 
@@ -14,12 +16,35 @@ export default class TodoPage extends React.Component {
     title: 'Todo',
   };
 
+  async logout() {
+    // const { back } = this.props.navigation;
+
+    try {
+
+      await firebase.auth().signOut()
+        .then(() => {
+          console.log("Successfully logged out");
+          const backAction = NavigationActions.back();
+          this.props.navigation.dispatch(backAction);
+        });
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Todos...</Text>
+        <Button
+          onPress={() => this.logout()}
+          color={'#484848'}
+          title="Logout >"
+        />
       </View>
     );
   }
