@@ -54,7 +54,7 @@ export default class LoginPage extends React.Component {
 
     try {
       await firebase.auth()
-        .signInWithEmailAndPassword(email, pass)
+        .signInWithEmailAndPassword('cletreg@hotmail.com', 'password')
         .then(() => {
           console.log("Successfully logged in");
           navigate('Todo');
