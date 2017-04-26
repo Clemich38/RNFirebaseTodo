@@ -4,8 +4,7 @@ import {
   View,
   Button,
   ScrollView,
-  StyleSheet, 
-  ListView,
+  StyleSheet,
   FlatList
 } from 'react-native';
 import * as firebase from "firebase";
@@ -21,10 +20,8 @@ export default class TodoPage extends React.Component {
 
   constructor(props) {
     super(props);
-    const { params } = this.props.navigation.state;
  
     // Realtime Database reference
-    this.firebaseApp = params.firebaseApp;
     this.todosRef = firebase.app().database().ref().child('todos');;
 
     this.state = {
@@ -98,18 +95,13 @@ export default class TodoPage extends React.Component {
         <Button
           onPress={() => this.logout()}
           color={'#484848'}
-          title="Logout >"
+          title="< Logout"
         />
         <FlatList
           data={this.state.todos}
           renderItem={this.renderItem}
           shouldItemUpdate={this.shouldItemUpdate}
         />
-        {/*<ListView
-          datasource={this.state.dataSource}
-          renderrow={this.renderItem.bind(this)}
-          style={styles.listview}
-        />*/}
       </View>
     );
   }

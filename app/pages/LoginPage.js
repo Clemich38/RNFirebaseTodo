@@ -58,16 +58,7 @@ export default class LoginPage extends React.Component {
         .signInWithEmailAndPassword(email, pass)
         .then(() => {
           console.log("Successfully logged in");
-          // navigate({
-          //   routeName: 'Todo',
-          //   params: this.firebaseApp
-          // });
-          const navigateAction = NavigationActions.navigate({
-            routeName: 'Todo',
-            params: {firebaseApp: this.firebaseApp},
-          })
-          this.props.navigation.dispatch(navigateAction)
-
+          navigate('Todo');
         });
 
     } catch (error) {
