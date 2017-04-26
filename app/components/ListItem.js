@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   delete: {
-    color: 'red',
+    color: 'tomato',
     fontSize: 16,}
 })

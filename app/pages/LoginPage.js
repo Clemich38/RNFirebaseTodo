@@ -75,7 +75,6 @@ export default class LoginPage extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Login Page</Text>
         <TextInput
           style={styles.input}
           onChangeText={(userName) => this.setState({ userName })}
@@ -111,20 +110,17 @@ export default class LoginPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
     paddingLeft: 25,
     paddingRight: 25,
   },
-  title: {
-    color: '#484848',
-    paddingTop: 15,
-    paddingBottom: 30,
-    fontSize: 20,
-    textAlign: 'center'
-  },
   input: {
+    backgroundColor: '#fff',
+    borderBottomColor: '#eee',
+    borderColor: 'transparent',
+    borderWidth: 1,
+    paddingLeft: 16,
     height: 40,
-    backgroundColor: '#E0E0E0',
-    borderWidth: 0,
     marginTop: 5,
     marginBottom: 5,
   }
