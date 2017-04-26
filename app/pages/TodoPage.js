@@ -82,7 +82,8 @@ export default class TodoPage extends React.Component {
         {
           text: 'Add',
           onPress: (text) => {
-            this.todosRef.push({ title: text })
+            this.todosRef.push({ title: text,
+                                 done: false})
           }
         },
       ],
