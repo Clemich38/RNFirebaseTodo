@@ -32,10 +32,6 @@ export default class TodoPage extends React.Component {
   }
 
   componentDidMount() {
-    // this.setState({
-    //   todos: [{ title: 'Pizza', key: 'item1' },
-    //           { title: 'Cornichons', key: 'item2' }]
-    // })
     this.listenForTodos(this.todosRef);
   }
 
