@@ -50,7 +50,14 @@ export default class TodoPage extends React.Component {
       });
 
       this.setState({
-        todos: todos
+        todos: todos.sort((a, b) => { 
+          if ((a.done === false) && (b.done === true))
+            return -1;
+          else if ((a.done === true) && (b.done === false))
+            return 1;
+          else
+            return 0;
+        })
       });
 
     });
@@ -98,17 +105,23 @@ export default class TodoPage extends React.Component {
           title: snap.val().title,
           done: snap.val().done === true ? false : true
         });
-    
-  });
+    });
   }
 
-  renderItem = ({ item }) => (
-    <ListItem item={item} onPress={this.toggleItemState.bind(this, item)} />
-  );
+  removeItem(item) {
+      this.todosRef.child(item.key).remove();
+  }
 
   shouldItemUpdate(prev, next) {
     return prev.item !== next.item;
   }
+
+  renderItem = ({ item }) => (
+    <ListItem
+      item={item}
+      onPress={this.toggleItemState.bind(this, item)}
+      onPressDelete={this.removeItem.bind(this, item)} />
+  );
 
   render() {
     const { navigate } = this.props.navigation;
