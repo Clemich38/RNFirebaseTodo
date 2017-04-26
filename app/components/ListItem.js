@@ -3,11 +3,20 @@ import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 
 export default class ListItem extends Component {
 
+  // Dynamic style sheet returning method
+  textStyle(done) {
+    return {
+      color: '#333',
+      fontSize: 16,
+      textDecorationLine: done? 'line-through' : 'none'
+    }
+  }
+
   render() {
     return (
       <TouchableHighlight onPress={this.props.onPress}>
         <View style={styles.li}>
-          <Text style={styles.liText}>{this.props.item.title}</Text>
+          <Text style={this.textStyle(this.props.item.done)}>{this.props.item.title}</Text>
         </View>
       </TouchableHighlight>
     );
@@ -24,9 +33,5 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingTop: 14,
     paddingBottom: 16,
-  },
-  liText: {
-    color: '#333',
-    fontSize: 16,
   },
 })

@@ -24,7 +24,8 @@ export default class TodoPage extends React.Component {
     super(props);
  
     // Realtime Database reference
-    this.todosRef = firebase.app().database().ref().child('todos');;
+    // Database/users/userId/todos
+    this.todosRef = firebase.app().database().ref().child('users').child(firebase.auth().currentUser.uid).child('todos');
 
     this.state = {
       todos: []
@@ -43,6 +44,7 @@ export default class TodoPage extends React.Component {
       snap.forEach((child) => {
         todos.push({
           title: child.val().title,
+          done: child.val().done,
           key: child.key
         });
       });
@@ -87,8 +89,21 @@ export default class TodoPage extends React.Component {
     );
   }
 
+  toggleItemState(item) {
+
+    this.todosRef.child(item.key).once('value', (snap) => {
+
+      this.todosRef.child(item.key)
+        .set({
+          title: snap.val().title,
+          done: snap.val().done === true ? false : true
+        });
+    
+  });
+  }
+
   renderItem = ({ item }) => (
-    <ListItem item={item} onpress={() => { }} />
+    <ListItem item={item} onPress={this.toggleItemState.bind(this, item)} />
   );
 
   shouldItemUpdate(prev, next) {
@@ -99,7 +114,6 @@ export default class TodoPage extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Todos...</Text>
         <Button
           onPress={() => this.logout()}
           color={'#484848'}
@@ -119,13 +133,6 @@ export default class TodoPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  title: {
-    color: '#484848',
-    paddingTop: 15,
-    paddingBottom: 30,
-    fontSize: 20,
-    textAlign: 'center'
   },
   listview: {
     flex: 1,
