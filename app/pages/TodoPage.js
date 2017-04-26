@@ -10,6 +10,7 @@ import {
 import * as firebase from "firebase";
 import { NavigationActions } from 'react-navigation'
 import ListItem from '../components/ListItem'
+import ActionButton from '../components/ActionButton'
 
 
 export default class TodoPage extends React.Component {
@@ -102,6 +103,7 @@ export default class TodoPage extends React.Component {
           renderItem={this.renderItem}
           shouldItemUpdate={this.shouldItemUpdate}
         />
+        <ActionButton title="Add" onpress={() => {}} />
       </View>
     );
   }
@@ -110,8 +112,6 @@ export default class TodoPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 25,
-    paddingRight: 25,
   },
   title: {
     color: '#484848',
