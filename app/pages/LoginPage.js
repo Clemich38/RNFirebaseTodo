@@ -7,21 +7,22 @@ import {
   TextInput,
 } from 'react-native';
 import * as firebase from "firebase";
+import { NavigationActions } from 'react-navigation'
 
 export default class LoginPage extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      userName: "",
-      pwd: ""
+      userName: "cletreg@hotmail.com",
+      pwd: "password"
     }
-    this.initFireBase();
+    this.firebaseApp = this.initFireBase();
   }
 
   initFireBase(){
     if (firebase.apps.length === 0){
-      firebase.initializeApp({
+      return firebase.initializeApp({
         apiKey: "AIzaSyBHOWbyrf6Mhfmz-oSpI6dDmU9v4AeJt_o",
         authDomain: "rn-todo-app-ba94c.firebaseapp.com",
         databaseURL: "https://rn-todo-app-ba94c.firebaseio.com",
@@ -54,10 +55,19 @@ export default class LoginPage extends React.Component {
 
     try {
       await firebase.auth()
-        .signInWithEmailAndPassword('cletreg@hotmail.com', 'password')
+        .signInWithEmailAndPassword(email, pass)
         .then(() => {
           console.log("Successfully logged in");
-          navigate('Todo');
+          // navigate({
+          //   routeName: 'Todo',
+          //   params: this.firebaseApp
+          // });
+          const navigateAction = NavigationActions.navigate({
+            routeName: 'Todo',
+            params: {firebaseApp: this.firebaseApp},
+          })
+          this.props.navigation.dispatch(navigateAction)
+
         });
 
     } catch (error) {

@@ -21,15 +21,42 @@ export default class TodoPage extends React.Component {
 
   constructor(props) {
     super(props);
+    const { params } = this.props.navigation.state;
+ 
+    // Realtime Database reference
+    this.firebaseApp = params.firebaseApp;
+    this.todosRef = firebase.app().database().ref().child('todos');;
+
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      })
+      todos: []
     };
   }
 
   componentDidMount() {
-    
+    // this.setState({
+    //   todos: [{ title: 'Pizza', key: 'item1' },
+    //           { title: 'Cornichons', key: 'item2' }]
+    // })
+    this.listenForTodos(this.todosRef);
+  }
+
+  listenForTodos(todosRef) {
+    todosRef.on('value', (snap) => {
+
+      // get children as an array
+      var todos = [];
+      snap.forEach((child) => {
+        todos.push({
+          title: child.val().title,
+          key: child.key
+        });
+      });
+
+      this.setState({
+        todos: todos
+      });
+
+    });
   }
 
   async logout() {
@@ -59,6 +86,10 @@ export default class TodoPage extends React.Component {
     <ListItem item={item} onpress={() => { }} />
   );
 
+  shouldItemUpdate(prev, next) {
+    return prev.item !== next.item;
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -70,8 +101,10 @@ export default class TodoPage extends React.Component {
           title="Logout >"
         />
         <FlatList
-          data={[{ title: 'Pizza', key: 'item1' }]}
-          renderItem={this.renderItem} />
+          data={this.state.todos}
+          renderItem={this.renderItem}
+          shouldItemUpdate={this.shouldItemUpdate}
+        />
         {/*<ListView
           datasource={this.state.dataSource}
           renderrow={this.renderItem.bind(this)}
