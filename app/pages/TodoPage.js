@@ -5,7 +5,8 @@ import {
   Button,
   ScrollView,
   StyleSheet,
-  FlatList
+  FlatList,
+  AlertIOS
 } from 'react-native';
 import * as firebase from "firebase";
 import { NavigationActions } from 'react-navigation'
@@ -73,12 +74,21 @@ export default class TodoPage extends React.Component {
     }
   }
 
-
-  // renderItem(item) {
-  //   return (
-  //     <ListItem item="{item}" onpress={() => {}} />
-  //   );
-  // }
+  addItem() {
+    AlertIOS.prompt(
+      'Add New Item',
+      null,
+      [
+        {
+          text: 'Add',
+          onPress: (text) => {
+            this.todosRef.push({ title: text })
+          }
+        },
+      ],
+      'plain-text'
+    );
+  }
 
   renderItem = ({ item }) => (
     <ListItem item={item} onpress={() => { }} />
@@ -103,7 +113,7 @@ export default class TodoPage extends React.Component {
           renderItem={this.renderItem}
           shouldItemUpdate={this.shouldItemUpdate}
         />
-        <ActionButton title="Add" onpress={() => {}} />
+        <ActionButton title="Add" onPress={this.addItem.bind(this)} />
       </View>
     );
   }
