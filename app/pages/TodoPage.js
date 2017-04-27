@@ -17,7 +17,7 @@ import ActionButton from '../components/ActionButton'
 export default class TodoPage extends React.Component {
 
   static navigationOptions = {
-    title: 'Todo',
+      title: 'Todo List',
   };
 
   constructor(props) {
@@ -127,11 +127,6 @@ export default class TodoPage extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Button
-          onPress={() => this.logout()}
-          color={'#484848'}
-          title="< Logout"
-        />
         <FlatList
           data={this.state.todos}
           renderItem={this.renderItem}

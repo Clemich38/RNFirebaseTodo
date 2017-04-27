@@ -5,7 +5,8 @@ import {
   View,
   Button,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import * as firebase from "firebase";
+import { Navigation, NavigationActions, StackNavigator } from 'react-navigation';
 
 
 // Pages
@@ -13,8 +14,25 @@ import LoginPage from './pages/LoginPage'
 import TodoPage from './pages/TodoPage'
 
 
-let navOptions = {
-  header: {
+let navOptionsLogout = {
+  header: (navigation) => ({
+    left: <Button
+              title='Logout'
+              color= '#E8E8E8'
+              onPress={() => {
+                try {
+                  firebase.auth().signOut()
+                    .then(() => {
+                      console.log("Successfully logged out");
+                      const backAction = NavigationActions.back();
+                      navigation.dispatch(backAction);
+                    });
+
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            />,
     titleStyle: {
       color: '#E8E8E8'
     },
@@ -22,13 +40,26 @@ let navOptions = {
     style: {
       backgroundColor: '#484848'
     }
-  },
+  })
 }
+
+let navOptions = {
+  header: (navigation) => ({
+    titleStyle: {
+      color: '#E8E8E8'
+    },
+    tintColor: '#E8E8E8',
+    style: {
+      backgroundColor: '#484848'
+    }
+  })
+}
+
 
 // Navigation stack configuration
 const RNFirebaseTodo = StackNavigator({
   Login: { screen: LoginPage, navigationOptions: navOptions },
-  Todo: { screen: TodoPage, navigationOptions: navOptions },
+  Todo: { screen: TodoPage, navigationOptions: navOptionsLogout },
 });
 
 AppRegistry.registerComponent('RNFirebaseTodo', () => RNFirebaseTodo);
