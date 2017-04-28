@@ -14,8 +14,8 @@ export default class LoginPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName: "cletreg@hotmail.com",
-      pwd: "password"
+      userName: "",
+      pwd: ""
     }
     this.firebaseApp = this.initFireBase();
   }
