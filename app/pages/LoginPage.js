@@ -23,12 +23,12 @@ export default class LoginPage extends React.Component {
   initFireBase(){
     if (firebase.apps.length === 0){
       return firebase.initializeApp({
-        apiKey: "AIzaSyBHOWbyrf6Mhfmz-oSpI6dDmU9v4AeJt_o",
-        authDomain: "rn-todo-app-ba94c.firebaseapp.com",
-        databaseURL: "https://rn-todo-app-ba94c.firebaseio.com",
-        projectId: "rn-todo-app-ba94c",
-        storageBucket: "rn-todo-app-ba94c.appspot.com",
-        messagingSenderId: "1043444153224"
+        apiKey: "Your_API_Key",
+        authDomain: "your-firebase-app.firebaseapp.com",
+        databaseURL: "https://your-firebase-app.firebaseio.com",
+        projectId: "your-firebase-app",
+        storageBucket: "your-firebase-app.appspot.com",
+        messagingSenderId: "xxxxxxxxxxxxx"
       });
     }
   }
