@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import * as firebase from "firebase";
 import { NavigationActions } from 'react-navigation'
+import prompt from 'react-native-prompt-android';
 import ListItem from '../components/ListItem'
 import ActionButton from '../components/ActionButton'
 
@@ -80,7 +81,7 @@ export default class TodoPage extends React.Component {
   }
 
   addItem() {
-    AlertIOS.prompt(
+    prompt(
       'Add New Item',
       null,
       [

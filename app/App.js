@@ -17,22 +17,22 @@ import TodoPage from './pages/TodoPage'
 let navOptionsLogout = {
   header: (navigation) => ({
     left: <Button
-              title='Logout'
-              color= '#E8E8E8'
-              onPress={() => {
-                try {
-                  firebase.auth().signOut()
-                    .then(() => {
-                      console.log("Successfully logged out");
-                      const backAction = NavigationActions.back();
-                      navigation.dispatch(backAction);
-                    });
+            title='Logout'
+            color= '#E8E8E8'
+            onPress={() => {
+              try {
+                firebase.auth().signOut()
+                  .then(() => {
+                    console.log("Successfully logged out");
+                    const backAction = NavigationActions.back();
+                    navigation.dispatch(backAction);
+                  });
 
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            />,
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          />,
     titleStyle: {
       color: '#E8E8E8'
     },
